@@ -25,3 +25,9 @@ thread_pool_add() interface.
 
 The pool can be dynamically scaled. Trimming the pool incurs an insignificant
 penalty. Adding to a pool incurs no penalty.
+
+Patches:
+
+If anyone is bothered enough to send a patch, please keep the following in mind: Simplicity. First and foremost the code needs to be maintainable. Slick tricks are great, but unless carefully commented, they'll be rejected.
+
+That said, if you have a performance hack and it is well commented, it'll be integrated.
