@@ -1,0 +1,27 @@
+
+Thread Pool server
+
+Demonstration code for thread pooling from a work queue.
+
+THIS CODE IS ALPHA QUALITY! It might compile. It might even work. Those are
+unlikely cases: It probably will eat your pet before pooping a core file.
+The only good part is that you get to keep the core file. Since the code is
+in flux, try not to complain too much.
+
+This code is GPLv2, not 3. The code is intended for a library that will be
+LGPLv2, but until then please adhere to the current license. Patches are
+welcome, but might not be considered until the code is in the utility library.
+Don't get mad, I'm not ignoring you, I just have a finite amount of time.
+
+Design:
+
+A runtime scalable thread pool. The threads should not loop, but work through a
+complete work packet and return. They should not call pthread_exit(). The
+scheduler will run the thread function again on completion. Avoid use of the
+argument, as the pool itself holds the argument pointer, not the individual
+threads. Changing the argument will update the threads on the next run of the
+thread. Since this is a bad idea, it can only be done through the
+thread_pool_add() interface.
+
+The pool can be dynamically scaled. Trimming the pool incurs an insignificant
+penalty. Adding to a pool incurs no penalty.
