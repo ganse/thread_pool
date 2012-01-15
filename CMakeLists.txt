@@ -6,6 +6,7 @@ add_definitions(-g -pipe -Wall -march=native -O3)
 # add_definitions(-g -pipe -Wall -march=pentium4 -O3 -funroll-loops)
 # add_definitions(-g -pipe -Wall)
 
+# Remove later...
 add_definitions(-DTHREAD_POOL_DEBUG)
 
 add_definitions(-D_GNU_SOURCE)
