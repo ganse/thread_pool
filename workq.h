@@ -40,12 +40,47 @@ typedef struct {
 	unsigned char data[WORKQ_MAX_SIZE]; /**< Message payload. */
 } workq_msg_t;
 
+/**
+ * @brief Create and initialize a work queue object.
+ *
+ * @param keyfile a filename to generate a key from, much like SysV ftok()
+ * @param subsystem_id subsystem (for use with multiple queues)
+ *
+ * return a work queue object
+ */
 WorkQ_t workq_init(const char *keyfile, int subsystem_id);
 
+/**
+ * @brief Clean up a work queue object.
+ *
+ * @param work_queue the work queue object to destroy
+ *
+ * return zero on success, something else on error
+ */
 int workq_destroy(WorkQ_t work_queue);
 
+/**
+ * @brief Get a work queue packet.
+ * 
+ * Note this will retrieve higher priority packets first.
+ *
+ * @param work_queue the work queue to retrieve from
+ * @param msg object to be filled in with the next work packet
+ *
+ * return the size of the work queue packet
+ */
 ssize_t workq_get(WorkQ_t work_queue, workq_msg_t *msg);
 
+/**
+ * @brief Add a work packet to a work queue.
+ *
+ * @param buffer the work queue packet
+ * @param size the size of the work queue packet
+ * @param work_queue the work queue to add to
+ * @param prio the priority of the work queue packet
+ *
+ * return zero on success, anything else is failure
+ */
 int workq_add(const unsigned char *buffer, size_t size, WorkQ_t work_queue, long prio);
 
 #endif /* WORK_QUEUE_H */

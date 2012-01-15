@@ -20,6 +20,13 @@
  * Boston, MA 02111-1307, USA.
  */
 
+/*
+ * You'll notice this is pretty much just a wrapper around
+ * SysV message queues. This is deliberate, as they already work
+ * pretty much the way I want them to work, especially the priority
+ * part, which I think is nifty.
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
