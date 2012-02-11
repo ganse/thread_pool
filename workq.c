@@ -102,7 +102,6 @@ int workq_destroy(WorkQ_t work_queue) {
 }
 
 ssize_t workq_get(WorkQ_t work_queue, workq_msg_t *msg) {
-	long x;
 	int rcv_size = 0;
 	wq_t *q = (wq_t*)work_queue;
 
@@ -115,15 +114,8 @@ ssize_t workq_get(WorkQ_t work_queue, workq_msg_t *msg) {
 
 	pthread_mutex_lock(&(q->mutex));
 
-	/* Get higher priority messages first */
-	for(x = 1L; x <= WORKQ_LOWEST_PRIO; ++x) {
-		if((rcv_size = msgrcv(q->id, msg, sizeof(*msg), x, IPC_NOWAIT)) > 0) {
-			return(rcv_size);
-		}
-	}
-
 	/* Wait for next message */
-	rcv_size = msgrcv(q->id, msg, sizeof(*msg), x, 0);
+	rcv_size = msgrcv(q->id, msg, sizeof(*msg), -WORKQ_LOWEST_PRIO, 0);
 
 	pthread_mutex_unlock(&(q->mutex));
 
