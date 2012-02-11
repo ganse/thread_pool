@@ -1,0 +1,27 @@
+
+CC = gcc
+
+LIBS = -lpthread
+
+WARN = -Wall
+WARN += -Werror
+
+OPTS = -pipe
+OPTS += -O3
+OPTS += -march=native
+
+SRCS = workq.c
+SRCS += thread_pool.c
+SRCS += test_workq.c
+SRCS += test_threads.c
+
+THREAD_OBJS = workq.o
+THREAD_OBJS += thread_pool.o
+THREAD_OBJS += test_threads.o
+
+WORKQ_OBJS = workq.o
+WORKQ_OBJS += test_workq.o
+
+: foreach $(SRCS) |> $(CC) $(WARN) $(OPTS) -c %f -o %o |> %B.o
+: $(WORKQ_OBJS) |> $(CC) $(WARN) $(OPTS) %f -o %o $(LIBS) |> test_workq
+: $(THREAD_OBJS) |> $(CC) $(WARN) $(OPTS) %f -o %o $(LIBS) |> test_threads
